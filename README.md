@@ -7,5 +7,6 @@ I am using Node.js as the runtime environment and obviously JavaScript to code t
 SQLite is the database program used to hold the images.
 
 ## Agenda
-    Write a function to better write the database to a website
-    Find the best way to have images in a database (store images outside of the database with a link to the image stored in the DB)
+    Connect the website to the backend database
+    have a way for the textbox to know who is on screen so it can display if the answer is correct or not
+    crop the images to use 

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSC-375 Project</title>
+</head>
+<body>
+    <link href = './CSC-375.css' rel='stylesheet'>  <!-- links the css file to the html file-->
+    <div class = '.example'> 
+        <img class = "Image" src = "./Photos/JeffBezos.jpg">
+    </div>
+    <form action = "submission.html" method = "GET">
+        <label for="Guess"> Who's forehead is this? </label>
+        <input type = "text" name = "Guess"> </input> <br>    
+    </form>
+    <button type = "button" onclick = "print()" >Work?</button>
+        <script>
+            function print () {
+                console.log("fetch Happened");
+                return fetch("http://localhost:8081")
+                    .then(response => {
+                        response.json().then ;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+        </script>
+</body>
+</html>

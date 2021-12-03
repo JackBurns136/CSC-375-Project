@@ -1,0 +1,25 @@
+{
+  "name": "javascriptprojects",
+  "version": "1.0.0",
+  "description": "This project is an open-source database that can be used to store images.  \r I am using Node.js as the runtime environment and obviously JavaScript to code the project.\r SQLite is the database program used to hold the images.",
+  "main": "databaseSetUp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JackBurns136/CSC-375-Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JackBurns136/CSC-375-Project/issues"
+  },
+  "homepage": "https://github.com/JackBurns136/CSC-375-Project#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "image-to-base64": "^2.2.0",
+    "jsdom": "^18.0.1"
+  }
+}
