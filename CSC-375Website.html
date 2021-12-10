@@ -7,21 +7,43 @@
     <title>CSC-375 Project</title>
 </head>
 <body>
+    <h1> Guess That Forehead!</h1>
     <link href = './CSC-375.css' rel='stylesheet'>  <!-- links the css file to the html file-->
     <div class = '.example'> 
-        <img class = "Image" src = "./Photos/JeffBezos.jpg">
+        <img id = "Image" src = "">
     </div>
-    <form action = "submission.html" method = "GET">
+    <form target = "_self" method = "POST">
         <label for="Guess"> Who's forehead is this? </label>
-        <input type = "text" name = "Guess"> </input> <br>    
+        <input type = "text" id = "Guess" name = "Guess" style = "text-transform: lowercase;"> </input> <br>    
     </form>
-    <button type = "button" onclick = "print()" >Work?</button>
+    <button type = "button" onclick = "print()"  >Click here to display a celebrity</button>
+    <form>
+        <button type="button" onclick="returnName();">"Click here to check your answer</button>
+    </form>
+    <script> 
+        function returnName() {
+            var input = document.getElementById("Guess").value;
+            if(input === "danny devito") {
+                alert("Congratulations! You got it right!")
+            } else {
+                alert("Sorry! Try again! The correct answer was ")
+            }
+        }
+            document.getElementById("Guess").addEventListener("keyup", function(event) {
+                if(event.keyCode === 13){
+                    document.getElementById("Guess").click();
+                }
+            });
+
+    </script>
         <script>
             function print () {
                 console.log("fetch Happened");
-                return fetch("http://localhost:8081")
+                fetch("http://localhost:8081")
+                    .then(response => response.json())
                     .then(response => {
-                        response.json().then ;
+                        document.getElementById("Image").src = "data:image/png;base64," + response.body;
+                        //console.log(response)
                     })
                     .catch(error => {
                         console.log(error);
