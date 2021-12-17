@@ -17,9 +17,10 @@
   },
   "homepage": "https://github.com/JackBurns136/CSC-375-Project#readme",
   "dependencies": {
+    "body-parser": "^1.19.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "image-to-base64": "^2.2.0",
-    "jsdom": "^18.0.1"
+    "jsdom": "^18.1.1"
   }
 }

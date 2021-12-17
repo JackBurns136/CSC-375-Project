@@ -6,12 +6,14 @@ const app = express();
 const imageToBase64 = require('image-to-base64');
 const sqlite3 = require('sqlite3').verbose();
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded());
 
 
 app.get('/', function(req,res) {
     
     //Opens a database in memory
-    let db = new sqlite3.Database('C:\\Users\\JackB\\Desktop\\QU2122-Fall\\CSC-375\\JavaScriptProjects\\SQLite\\GameDatabase.db', (error) => {// could potentially change the long sequence to __dirname
+    let db = new sqlite3.Database('SQLite\\GameDatabase.db', (error) => {// could potentially change the long sequence to __dirname
         if(error){
          console.log(error.message);
         }
@@ -35,7 +37,7 @@ app.get('/', function(req,res) {
         console.log(rows[rand].CelebrityName)
         imageToBase64(celebList[rand])
             .then(response => {
-                res.send(JSON.stringify({body: response}));
+                res.send(JSON.stringify({body: response, id: rows[rand].PhotoID}));
             })
             .catch(error => {
                 console.log(error);
@@ -52,35 +54,31 @@ app.get('/', function(req,res) {
     
 })
 
+//Gets the user's input back and checks if they inputted the correct answer
 app.post('/checkAnswer', function (req,res) {
 
-    let db2 = new sqlite3.Database('C:\\Users\\JackB\\Desktop\\QU2122-Fall\\CSC-375\\SQLite\\GameDatabase.db', (error) => {
+    let db2 = new sqlite3.Database('SQLite\\GameDatabase.db', (error) => {
         if(error){
          console.log(error.message);
         }
         console.log('Connection Successful');
     });
     
-    const body = req.body
-    const imageName = body.imageName // correct answer from the database
+    const body = req.body;
+    const photoID = body.PhotoID // correct answer from the database
     const answer = body.answer //answer user inputted
-    let sqlAnswer = 'SELECT * FROM Photos';
-    console.log(body);
-    console.log(imageName);
-    console.log(answer);
-    console.log(sqlAnswer);
+    let sqlAnswer = 'SELECT CelebrityName FROM Photos WHERE PhotoID = ?';
 
-    db2.all(sqlAnswer, [], (err, rows) => {
+    db2.all(sqlAnswer, [photoID], (err, rows) => {
         if(err) {
             throw err;
         }
-        for(let i = 0; i < 13; i++) {
-            if(answer === imageName) {
-                res.send("Correct");
+            if(answer === rows[0].CelebrityName) {
+                res.send(JSON.stringify({message: "Correct"}));
             } else {
-                res.send("Incorrect");
+                res.send(JSON.stringify({message: "Incorrect"}));
             }
-        }
+        
     })
 
     db2.close((error) => {

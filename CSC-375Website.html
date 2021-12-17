@@ -14,27 +14,40 @@
     </div>
     <form target = "_self" method = "POST">
         <label for="Guess"> Who's forehead is this? </label>
-        <input type = "text" id = "Guess" name = "Guess" style = "text-transform: lowercase;"> </input> <br>    
+        <input  autocomplete = "off" type = "text" id = "Guess" name = "Guess" style = "text-transform: lowercase;"> </input> <br>    
     </form>
     <button type = "button" onclick = "print()"  >Click here to display a celebrity</button>
     <form>
-        <button type="button" onclick="returnName();">"Click here to check your answer</button>
+        <button type="button" onclick="returnName();">Click here to check your answer</button>
+    </form>
+    <form> 
+        <label id = "Answer" name = ""> </label>
     </form>
     <script> 
-        function returnName() {
-            var input = document.getElementById("Guess").value;
-            if(input === "danny devito") {
-                alert("Congratulations! You got it right!")
-            } else {
-                alert("Sorry! Try again! The correct answer was ")
-            }
-        }
-            document.getElementById("Guess").addEventListener("keyup", function(event) {
-                if(event.keyCode === 13){
-                    document.getElementById("Guess").click();
+        function returnName() { 
+            let input = document.getElementById("Guess").value;
+            fetch("http://localhost:8081/checkAnswer", {
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({PhotoID: sessionStorage.getItem("PhotoID"), answer: input})
+            })
+            .then(response => response.json())
+            .then(response => {
+                let x = document.getElementById("Answer");
+                if(response.message === "Correct") {
+                    alert("You've successfully guessed the correct celebrity!");
+                } else {
+                    alert('Incorrect! Guess again or Click the Display Celebrity button for a different forehead.');
                 }
+            })
+            .catch(error => {
+                console.log(error);
             });
 
+        }
     </script>
         <script>
             function print () {
@@ -43,7 +56,7 @@
                     .then(response => response.json())
                     .then(response => {
                         document.getElementById("Image").src = "data:image/png;base64," + response.body;
-                        //console.log(response)
+                        sessionStorage.setItem("PhotoID", response.id);
                     })
                     .catch(error => {
                         console.log(error);
