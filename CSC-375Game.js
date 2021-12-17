@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
 
-
+//Sends the image to the front end in Base64
 app.get('/', function(req,res) {
     
     //Opens a database in memory
@@ -19,7 +19,7 @@ app.get('/', function(req,res) {
         }
         console.log('Connection Successful');
     });
-
+    //runs this SQL statement to get all the information from the database
     let sql = 'SELECT * FROM Photos';
     db.all(sql,[], (err, rows) => {
         if(err) {
@@ -29,12 +29,12 @@ app.get('/', function(req,res) {
          //Fills an array with the images, have to update the if statement to the size of the database
         let celebList = [];
         for(let i = 0; i < 13; i++){
-            console.log(celebList[i] = rows[i].PhotoFilePath);
+            celebList[i] = rows[i].PhotoFilePath;
         };
         
         //Random number genetated then sent to the front end as Base64
         let rand = Math.floor(Math.random() * 13)
-        console.log(rows[rand].CelebrityName)
+        //console.log(rows[rand].CelebrityName)
         imageToBase64(celebList[rand])
             .then(response => {
                 res.send(JSON.stringify({body: response, id: rows[rand].PhotoID}));
@@ -80,7 +80,7 @@ app.post('/checkAnswer', function (req,res) {
             }
         
     })
-
+    //Closes the database
     db2.close((error) => {
         if(error){
         console.log(error.message);
