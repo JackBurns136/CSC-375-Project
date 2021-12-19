@@ -72,8 +72,8 @@ app.post('/checkAnswer', function (req,res) {
     db2.all(sqlAnswer, [photoID], (err, rows) => {
         if(err) {
             throw err;
-        }
-            if(answer === rows[0].CelebrityName) {
+        }   
+            if(answer === rows[0].CelebrityName) { //This checks the user's answer to the database's stored name then sends if it is correct or incorrect to the front end
                 res.send(JSON.stringify({message: "Correct"}));
             } else {
                 res.send(JSON.stringify({message: "Incorrect"}));
